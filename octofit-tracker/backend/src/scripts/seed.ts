@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { User } from "../models/User";
-import { Team } from "../models/Team";
-import { Activity } from "../models/Activity";
-import { Leaderboard } from "../models/Leaderboard";
-import { Workout } from "../models/Workout";
+import { User } from "../models/User.js";
+import { Team } from "../models/Team.js";
+import { Activity } from "../models/Activity.js";
+import { Leaderboard } from "../models/Leaderboard.js";
+import { Workout } from "../models/Workout.js";
 
 /**
  * Seed the octofit_db database with test data

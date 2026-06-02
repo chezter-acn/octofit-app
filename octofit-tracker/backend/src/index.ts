@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
-import { connectDatabase } from "./config/database";
-import { User } from "./models/User";
-import { Team } from "./models/Team";
-import { Activity } from "./models/Activity";
-import { Leaderboard } from "./models/Leaderboard";
-import { Workout } from "./models/Workout";
+import { connectDatabase } from "./config/database.js";
+import { User } from "./models/User.js";
+import { Team } from "./models/Team.js";
+import { Activity } from "./models/Activity.js";
+import { Leaderboard } from "./models/Leaderboard.js";
+import { Workout } from "./models/Workout.js";
 
 const app = express();
 const port = 8000;
@@ -154,7 +154,7 @@ app.post("/api/workouts/", async (req: Request, res: Response) => {
 // MongoDB connection
 connectDatabase()
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port, "0.0.0.0", () => {
       console.log(`Backend listening on ${getApiUrl()}`);
     });
   })
