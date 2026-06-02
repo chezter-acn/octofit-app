@@ -1,9 +1,14 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import { User } from "./models/User";
+import { Team } from "./models/Team";
+import { Activity } from "./models/Activity";
+import { Leaderboard } from "./models/Leaderboard";
+import { Workout } from "./models/Workout";
 
 const app = express();
 const port = 8000;
-const mongoUri = "mongodb://localhost:27017/octofit";
+const mongoUri = "mongodb://localhost:27017/octofit_db";
 
 // Middleware
 app.use(express.json());
@@ -26,71 +31,125 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Users endpoint
-app.get("/api/users/", (req: Request, res: Response) => {
-  res.json({
-    message: "Users endpoint",
-    users: [],
-  });
+app.get("/api/users/", async (req: Request, res: Response) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json({
+      message: "Users endpoint",
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
 });
 
-app.post("/api/users/", (req: Request, res: Response) => {
-  res.json({
-    message: "Create user",
-    user: req.body,
-  });
+app.post("/api/users/", async (req: Request, res: Response) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json({
+      message: "Create user",
+      user,
+    });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to create user" });
+  }
 });
 
 // Teams endpoint
-app.get("/api/teams/", (req: Request, res: Response) => {
-  res.json({
-    message: "Teams endpoint",
-    teams: [],
-  });
+app.get("/api/teams/", async (req: Request, res: Response) => {
+  try {
+    const teams = await Team.find()
+      .populate("members", "-password")
+      .populate("createdBy", "-password");
+    res.json({
+      message: "Teams endpoint",
+      teams,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch teams" });
+  }
 });
 
-app.post("/api/teams/", (req: Request, res: Response) => {
-  res.json({
-    message: "Create team",
-    team: req.body,
-  });
+app.post("/api/teams/", async (req: Request, res: Response) => {
+  try {
+    const team = new Team(req.body);
+    await team.save();
+    res.status(201).json({
+      message: "Create team",
+      team,
+    });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to create team" });
+  }
 });
 
 // Activities endpoint
-app.get("/api/activities/", (req: Request, res: Response) => {
-  res.json({
-    message: "Activities endpoint",
-    activities: [],
-  });
+app.get("/api/activities/", async (req: Request, res: Response) => {
+  try {
+    const activities = await Activity.find().populate("userId", "-password");
+    res.json({
+      message: "Activities endpoint",
+      activities,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch activities" });
+  }
 });
 
-app.post("/api/activities/", (req: Request, res: Response) => {
-  res.json({
-    message: "Log activity",
-    activity: req.body,
-  });
+app.post("/api/activities/", async (req: Request, res: Response) => {
+  try {
+    const activity = new Activity(req.body);
+    await activity.save();
+    res.status(201).json({
+      message: "Log activity",
+      activity,
+    });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to log activity" });
+  }
 });
 
 // Leaderboard endpoint
-app.get("/api/leaderboard/", (req: Request, res: Response) => {
-  res.json({
-    message: "Leaderboard endpoint",
-    leaderboard: [],
-  });
+app.get("/api/leaderboard/", async (req: Request, res: Response) => {
+  try {
+    const leaderboard = await Leaderboard.find()
+      .populate("userId", "-password")
+      .populate("teamId")
+      .sort({ rank: 1 });
+    res.json({
+      message: "Leaderboard endpoint",
+      leaderboard,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch leaderboard" });
+  }
 });
 
 // Workouts endpoint
-app.get("/api/workouts/", (req: Request, res: Response) => {
-  res.json({
-    message: "Workouts endpoint",
-    workouts: [],
-  });
+app.get("/api/workouts/", async (req: Request, res: Response) => {
+  try {
+    const workouts = await Workout.find().populate("userId", "-password");
+    res.json({
+      message: "Workouts endpoint",
+      workouts,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch workouts" });
+  }
 });
 
-app.post("/api/workouts/", (req: Request, res: Response) => {
-  res.json({
-    message: "Create workout suggestion",
-    workout: req.body,
-  });
+app.post("/api/workouts/", async (req: Request, res: Response) => {
+  try {
+    const workout = new Workout(req.body);
+    await workout.save();
+    res.status(201).json({
+      message: "Create workout suggestion",
+      workout,
+    });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to create workout" });
+  }
 });
 
 // MongoDB connection
