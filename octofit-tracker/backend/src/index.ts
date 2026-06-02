@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import mongoose from "mongoose";
+import { connectDatabase } from "./config/database";
 import { User } from "./models/User";
 import { Team } from "./models/Team";
 import { Activity } from "./models/Activity";
@@ -8,7 +8,6 @@ import { Workout } from "./models/Workout";
 
 const app = express();
 const port = 8000;
-const mongoUri = "mongodb://localhost:27017/octofit_db";
 
 // Middleware
 app.use(express.json());
@@ -153,14 +152,13 @@ app.post("/api/workouts/", async (req: Request, res: Response) => {
 });
 
 // MongoDB connection
-mongoose
-  .connect(mongoUri)
+connectDatabase()
   .then(() => {
-    console.log("Connected to MongoDB at", mongoUri);
     app.listen(port, () => {
       console.log(`Backend listening on ${getApiUrl()}`);
     });
   })
   .catch((error) => {
-    console.error("MongoDB connection error:", error);
+    console.error("Failed to start server:", error);
+    process.exit(1);
   });
