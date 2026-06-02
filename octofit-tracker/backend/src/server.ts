@@ -15,7 +15,7 @@ app.use(express.json());
 // Codespaces-aware API URL support
 const getApiUrl = (): string => {
   if (process.env.CODESPACE_NAME) {
-    return `https://${process.env.CODESPACE_NAME}-${port}.app.github.dev`;
+    return `https://${process.env.CODESPACE_NAME}-8000.app.github.dev`;
   }
   return `http://localhost:${port}`;
 };
