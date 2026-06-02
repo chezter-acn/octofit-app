@@ -10,7 +10,6 @@ function Workouts() {
   useEffect(() => {
     let active = true
 
-    setLoading(true)
     fetch(buildApiUrl('workouts'))
       .then((response) => {
         if (!response.ok) {

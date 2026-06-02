@@ -10,7 +10,6 @@ function Activities() {
   useEffect(() => {
     let active = true
 
-    setLoading(true)
     fetch(buildApiUrl('activities'))
       .then((response) => {
         if (!response.ok) {

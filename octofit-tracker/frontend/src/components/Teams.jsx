@@ -10,7 +10,6 @@ function Teams() {
   useEffect(() => {
     let active = true
 
-    setLoading(true)
     fetch(buildApiUrl('teams'))
       .then((response) => {
         if (!response.ok) {

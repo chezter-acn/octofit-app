@@ -10,7 +10,6 @@ function Users() {
   useEffect(() => {
     let active = true
 
-    setLoading(true)
     fetch(buildApiUrl('users'))
       .then((response) => {
         if (!response.ok) {

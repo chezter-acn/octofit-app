@@ -10,7 +10,6 @@ function Leaderboard() {
   useEffect(() => {
     let active = true
 
-    setLoading(true)
     fetch(buildApiUrl('leaderboard'))
       .then((response) => {
         if (!response.ok) {
