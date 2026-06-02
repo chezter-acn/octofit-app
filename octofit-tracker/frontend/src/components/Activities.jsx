@@ -42,6 +42,9 @@ function Activities() {
       <p>
         This page loads activities from <code>{apiUrl}</code>
       </p>
+      <p>
+        Example endpoint: <code>{`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`}</code>
+      </p>
       {loading && <p>Loading activities…</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && activities.length === 0 && <p>No activities found.</p>}

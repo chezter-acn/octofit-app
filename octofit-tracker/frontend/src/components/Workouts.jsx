@@ -40,7 +40,10 @@ function Workouts() {
     <section>
       <h2>Workouts</h2>
       <p>
-        This page loads workouts from <code>{apiUrl}</code>
+        This page loads workouts from <code>{apiUrl}</code>.
+      </p>
+      <p>
+        Example endpoint: <code>{`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`}</code>
       </p>
       {loading && <p>Loading workouts…</p>}
       {error && <p className="error">{error}</p>}

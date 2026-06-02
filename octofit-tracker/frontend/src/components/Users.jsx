@@ -42,6 +42,9 @@ function Users() {
       <p>
         This page loads users from <code>{apiUrl}</code>
       </p>
+      <p>
+        Example endpoint: <code>{`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`}</code>
+      </p>
       {loading && <p>Loading users…</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && users.length === 0 && <p>No users found.</p>}

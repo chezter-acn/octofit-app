@@ -42,6 +42,9 @@ function Teams() {
       <p>
         This page loads teams from <code>{apiUrl}</code>
       </p>
+      <p>
+        Example endpoint: <code>{`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`}</code>
+      </p>
       {loading && <p>Loading teams…</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && teams.length === 0 && <p>No teams found.</p>}

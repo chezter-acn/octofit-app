@@ -42,6 +42,9 @@ function Leaderboard() {
       <p>
         This page loads leaderboard data from <code>{apiUrl}</code>
       </p>
+      <p>
+        Example endpoint: <code>{`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`}</code>
+      </p>
       {loading && <p>Loading leaderboard…</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && entries.length === 0 && <p>No leaderboard entries found.</p>}
